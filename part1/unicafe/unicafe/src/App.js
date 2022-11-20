@@ -18,6 +18,12 @@ const Positive = (props) => {
 
 
 const Statistics = (props) => {
+  if (props.good === 0 && props.bad === 0 && props.neutral === 0) {
+    return (
+      <div>
+        No Feedback given
+      </div>
+    )}
   return (
     <div>
     <h1>statistics</h1>
@@ -41,6 +47,7 @@ const App = () => {
   let sum = good + neutral + bad
 
 
+
   const clickGood = () => {
     setAverage(averageClicks + 1)
     setGood(good + 1)
@@ -53,7 +60,7 @@ const App = () => {
     setAverage(averageClicks - 1)
   }
 
-  return (
+return (
     <div>
       <h1>give feedback</h1>
       <button onClick={(clickGood)}>
