@@ -29,15 +29,27 @@ const copy = [...votes]
 const getVote = () => {
 copy[selected] += 1
 setVotes(copy)
-
 }
+
+const topVote = Math.max(...copy)
+const winnerAnecdote = anecdotes[copy.indexOf(topVote)]
+
+
+console.log(copy)
+console.log(selected)
 
 return (
     <div>
+      <h1>Anecdote of the day</h1>
       <Button buttonFunction= {getRandomElement} text="next anecdote" />
       <Button buttonFunction={getVote} text="vote" />
       <p>{anecdotes[selected]}</p>
       <p>has {copy[selected]} votes</p>
+      <h1>Anecdote with most votes</h1>
+      <p>{winnerAnecdote}</p>
+      <p>has {topVote} votes</p>
+
+
     </div>
   )
 }
