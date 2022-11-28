@@ -3,25 +3,23 @@ import { useState } from 'react'
 const App = () => {
   const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
-  
+
+
   const addNumber = (event) => {
     event.preventDefault()
-    console.log('button clicked', event.target)
-    const allNames = persons.map(person => person.newName)
-
-if (allNames.includes({newName})) {
- alert(`${newName} is already added to phonebook`)
-}
-
+    // console.log('button clicked', event.target)
+    // existingNames ? alert(`${newName} is already in the phonebook`) : 
+    const existingPerson = persons.find(person => person.newName === newName);
+    if (existingPerson) {
+      window.alert(`${newName} is already added to phonebook`);
+      return;
+    }
     setPersons(persons.concat({newName}))
-    setNewName('')
-    console.log(persons)
-  }
-
+    setNewName(" ")
+};
   const eventChange = (event) => {    
-    console.log(event.target.value)    
+    // console.log(event.target.value)    
     setNewName(event.target.value)  }
-
 
   return (
     <div>
