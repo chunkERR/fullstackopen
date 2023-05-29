@@ -8,42 +8,6 @@ const Header = () => {
   );
 };
 
-// const Table = (props) => {
-//   return ([
-//       <table>
-//         <tbody>
-//         <tr>
-//           <td><StatisticLine name="good" value={props.good}/></td>
-//         </tr>
-//         <tr> 
-//           <td><StatisticLine name="neutral" value={props.neutral}/></td>
-//         </tr>
-//         <tr>
-//           <td>
-//           <StatisticLine name="bad" value={props.bad}/>
-//           </td>
-//         </tr>
-//         <tr>
-//           <td>
-//           <StatisticLine name="total" value={props.total}/>
-//           </td>
-//         </tr>
-//         <td>
-//           <tr>
-//           <StatisticLine name="average" value={props.calculateAverage}/>
-//           </tr>
-//         </td>
-//         <tr>
-//           <td>
-//           <StatisticLine name="positive" value={props.calculatePositive}/>
-//           </td>
-//         </tr>
-//         </tbody>
-//       </table>
-//       ]
-//   )
-// }
-
 const Button = ({ handleClick, text }) => (
   <button onClick={handleClick}>{text}</button>
 );
@@ -135,9 +99,6 @@ const calculatePositive = () => {
       <Button handleClick={() => addBadReview()} text="bad" />
         <h1>statistics</h1>
       <Stats good={good} neutral={neutral} bad={bad} total={total} calculateAverage={calculateAverage()} calculatePositive={calculatePositive()} allReviews={allReviews}/>
-      <div>
-        <p>{allReviews.join(' ')}</p>
-      </div>
     </div>
   );
 };
