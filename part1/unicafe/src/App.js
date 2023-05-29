@@ -26,7 +26,7 @@ const Stats = (props) => {
       <p>bad {props.bad}</p>
       <p>total {props.total}</p>
       <p>average {props.average}</p>
-      <p>total {props.positive}</p>
+      <p>positive {props.positive} %</p>
     </div>
   );
 };
@@ -55,6 +55,25 @@ const App = () => {
     setNeutral(neutral + 1);
   };
 
+
+
+const total = good + bad + neutral
+
+const calculateAverage = () => {
+  const addedValues = allReviews.reduce(
+    (accumulator, currentValue) => accumulator + currentValue, 0
+)
+console.log(calculateAverage)
+return addedValues / total
+}
+
+
+const calculatePositive = () => {
+  const percentPositive = (good / total) * 100
+  return percentPositive
+}
+
+
   return (
     <div>
       <Header />
@@ -65,8 +84,14 @@ const App = () => {
         good={good}
         neutral={neutral}
         bad={bad}
-        total={good + bad + neutral}
+        total={total}        
+        average={calculateAverage()}
+        positive={calculatePositive()}
+
       />
+      <div>
+        <p>{allReviews.join(' ')}</p>
+      </div>
     </div>
   );
 };
