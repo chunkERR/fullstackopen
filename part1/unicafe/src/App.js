@@ -18,9 +18,15 @@ const Button = ({ handleClick, text }) => (
 // }
 
 const Stats = (props) => {
+  if (props.allReviews.length === 0) {
+    return (
+      <div>
+        no feedback provided
+      </div>
+    )
+  }
   return (
     <div>
-      <h1>statistics</h1>
       <p>good {props.good}</p>
       <p>neutral {props.neutral}</p>
       <p>bad {props.bad}</p>
@@ -80,6 +86,7 @@ const calculatePositive = () => {
       <Button handleClick={() => addGoodReview()} text="good" />
       <Button handleClick={() => addNeutral()} text="neutral" />
       <Button handleClick={() => addBadReview()} text="bad" />
+      <h1>statistics</h1>
       <Stats
         good={good}
         neutral={neutral}
@@ -87,6 +94,7 @@ const calculatePositive = () => {
         total={total}        
         average={calculateAverage()}
         positive={calculatePositive()}
+        allReviews={allReviews}
 
       />
       <div>
