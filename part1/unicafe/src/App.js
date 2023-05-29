@@ -8,35 +8,83 @@ const Header = () => {
   );
 };
 
+// const Table = (props) => {
+//   return ([
+//       <table>
+//         <tbody>
+//         <tr>
+//           <td><StatisticLine name="good" value={props.good}/></td>
+//         </tr>
+//         <tr> 
+//           <td><StatisticLine name="neutral" value={props.neutral}/></td>
+//         </tr>
+//         <tr>
+//           <td>
+//           <StatisticLine name="bad" value={props.bad}/>
+//           </td>
+//         </tr>
+//         <tr>
+//           <td>
+//           <StatisticLine name="total" value={props.total}/>
+//           </td>
+//         </tr>
+//         <td>
+//           <tr>
+//           <StatisticLine name="average" value={props.calculateAverage}/>
+//           </tr>
+//         </td>
+//         <tr>
+//           <td>
+//           <StatisticLine name="positive" value={props.calculatePositive}/>
+//           </td>
+//         </tr>
+//         </tbody>
+//       </table>
+//       ]
+//   )
+// }
+
 const Button = ({ handleClick, text }) => (
   <button onClick={handleClick}>{text}</button>
 );
 
-// const Instructions = (props) => {
-//   if (props.good.length === 0)
-
-// }
 
 const Stats = (props) => {
   if (props.allReviews.length === 0) {
     return (
       <div>
-        no feedback provided
+        <p>no feedback provided</p>
       </div>
     )
   }
   return (
     <div>
-      <p>good {props.good}</p>
-      <p>neutral {props.neutral}</p>
-      <p>bad {props.bad}</p>
-      <p>total {props.total}</p>
-      <p>average {props.average}</p>
-      <p>positive {props.positive} %</p>
+      <table>
+      <tbody>
+      <StatisticLine name="good" value={props.good}/>
+      <StatisticLine name="neutral" value={props.neutral}/>
+      <StatisticLine name="bad" value={props.bad}/>
+      <StatisticLine name="total" value={props.total}/>
+      <StatisticLine name="average" value={props.calculateAverage}/>
+      <StatisticLine name="positive" value={props.calculatePositive}/>
+    </tbody>
+      </table>
     </div>
+
+
   );
 };
 
+
+const StatisticLine = (props) => {
+  return (
+<tr>
+<td>{props.name} </td>
+<td>{props.value} </td>
+</tr>  
+   
+  )
+}
 const App = () => {
   // save clicks of each button to its own state
   const [good, setGood] = useState(0);
@@ -62,7 +110,6 @@ const App = () => {
   };
 
 
-
 const total = good + bad + neutral
 
 const calculateAverage = () => {
@@ -86,17 +133,8 @@ const calculatePositive = () => {
       <Button handleClick={() => addGoodReview()} text="good" />
       <Button handleClick={() => addNeutral()} text="neutral" />
       <Button handleClick={() => addBadReview()} text="bad" />
-      <h1>statistics</h1>
-      <Stats
-        good={good}
-        neutral={neutral}
-        bad={bad}
-        total={total}        
-        average={calculateAverage()}
-        positive={calculatePositive()}
-        allReviews={allReviews}
-
-      />
+        <h1>statistics</h1>
+      <Stats good={good} neutral={neutral} bad={bad} total={total} calculateAverage={calculateAverage()} calculatePositive={calculatePositive()} allReviews={allReviews}/>
       <div>
         <p>{allReviews.join(' ')}</p>
       </div>
