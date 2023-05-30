@@ -33,7 +33,7 @@ const App = () => {
   const addVotes = () => {
     copyPoints[selected] = (copyPoints[selected] || 0) + 1;    
     setPoints(copyPoints)
-    console.log(copyPoints)
+    // console.log(copyPoints)
   }
 
 
@@ -48,8 +48,8 @@ const App = () => {
     }
     
     const maxVotes = getKeyByValue(copyPoints, max)
-    console.log(maxVotes)
-    
+    // console.log(maxVotes)
+
     return (
     <div>
       <h1>Anecdote of the day</h1>
@@ -58,7 +58,8 @@ const App = () => {
       <Button handleClick={getRandomAnecdote} text="next anecdote"/>
       <Button handleClick={addVotes} text="vote"/>
       <h1>Anecdote with most votes</h1>
-      <p>{maxVotes}{max}</p>
+      <p>{maxVotes}</p>
+      <p>has {max} votes.</p>
     </div>
   )
 }
