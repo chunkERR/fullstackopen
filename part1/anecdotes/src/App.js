@@ -18,7 +18,7 @@ const App = () => {
     'The only way to go fast, is to go well.'
   ]
 
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState(anecdotes[0]);
 
   
   const getRandomAnecdote = () => {
