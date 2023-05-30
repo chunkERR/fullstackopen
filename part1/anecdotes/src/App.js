@@ -23,6 +23,7 @@ const App = () => {
   const copyPoints = { ...points }
 
 
+
   
   const getRandomAnecdote = () => {
     let randomAnecdote = anecdotes[Math.floor(Math.random() * anecdotes.length)];
@@ -35,15 +36,21 @@ const App = () => {
     console.log(copyPoints)
   }
 
-  const MaxVotes = () => {
-     const values = Object.values(copyPoints)
-     const max = Math.max( ...values )
-    console.log(max)
-  }
 
-  MaxVotes()
 
-  return (
+    const values = Object.values(copyPoints)
+    let max = Math.max( ...values )
+    // console.log(max)
+
+
+    function getKeyByValue(object, value) {
+      return Object.keys(object).find(key => object[key] === value);
+    }
+    
+    const maxVotes = getKeyByValue(copyPoints, max)
+    console.log(maxVotes)
+    
+    return (
     <div>
       <h1>Anecdote of the day</h1>
       <p>{selected}</p>
@@ -51,7 +58,7 @@ const App = () => {
       <Button handleClick={getRandomAnecdote} text="next anecdote"/>
       <Button handleClick={addVotes} text="vote"/>
       <h1>Anecdote with most votes</h1>
-      
+      <p>{maxVotes}{max}</p>
     </div>
   )
 }
