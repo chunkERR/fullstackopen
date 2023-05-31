@@ -43,6 +43,7 @@ const App = () => {
     // console.log(max)
 
 
+
     function getKeyByValue(object, value) {
       return Object.keys(object).find(key => object[key] === value);
     }
@@ -65,3 +66,4 @@ const App = () => {
 }
 
 export default App
+
