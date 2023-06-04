@@ -43,54 +43,25 @@ const App = () => {
       ],
     },
   ];
-  const course = {
-    id: 1,
-    name: "Half Stack application development",
-    parts: [
-      {
-        name: "Fundamentals of React",
-        exercises: 10,
-        id: 1,
-      },
-      {
-        name: "Using props to pass data",
-        exercises: 7,
-        id: 2,
-      },
-      {
-        name: "State of a component",
-        exercises: 14,
-        id: 3,
-      },
-      {
-        name: "Mom gay",
-        exercises: 15,
-        id: 4,
-      },
-    ],
-  };
 
-  const courseName = courses.map((header) => header.name);
-  console.log(courseName);
-
-  const Header = ({ course }) => <h1>{course}</h1>;
+  const Header = ({ name }) => <h2>{name}</h2>;
 
   const Content = ({ parts }) => (
     <>
-      <Part part={course.parts} />
+      <Part parts={parts} />
     </>
   );
 
-  const Part = ({ part }) => {
-    return course.parts.map((part) => (
+  const Part = ({ parts }) => {
+    return parts.map((part) => (
       <p key={part.id}>
         {part.name} {part.exercises}
       </p>
     ));
   };
 
-  const Total = () => {
-    const totalExercises = course.parts.map((part) => part.exercises);
+  const Total = ({ parts }) => {
+    const totalExercises = parts.map((part) => part.exercises);
     const sumExercises = totalExercises.reduce(
       (accumulator, currentValue) => accumulator + currentValue,
       0
@@ -102,27 +73,22 @@ const App = () => {
     );
   };
 
-  const Course = () => {
-    return (
-      <div>
-        <Header course={course.name} />
-        <Content parts={course.parts} />
-        <Total />
-      </div>
-    );
+  const Course = ({ courses }) => {
+    return courses.map((course) => {
+      return (
+        <div key={course.id}>
+          <Header name={course.name} />
+          <Content parts={course.parts} />
+          <Total parts={course.parts} />
+        </div>
+      );
+    });
   };
-
-  // const singleCourse = courses.map((course) => (
-  //   <Course key={course.id} course={course} />
-  // ));
-  // console.log(singleCourse);
 
   return (
     <div>
       <h1>Web development curriculum</h1>
-      {courses.map((course) => (
-        <Course key={course.id} />
-      ))}
+      <Course courses={courses} key={courses.id} />
     </div>
   );
 };
