@@ -1,5 +1,45 @@
 import { useState } from "react";
 
+const Filter = ({searchResult, handleSearch}) => {
+  return (
+  <div>
+  filter starts with: <input value={searchResult} onChange={handleSearch} />
+  </div>)
+}
+
+const Persons = ({persons, searchResult}) => {
+  const getFilteredNames = () => {
+    if (!searchResult) return persons
+    return persons.filter(person => person.name.toLowerCase().startsWith(searchResult.toLowerCase()))
+  }
+
+  const filteredNames = getFilteredNames()
+  return (
+    <ul>
+    {filteredNames.map((person) => (
+      <li key={person.name}>{person.name} {person.phone}</li>
+    ))}
+  </ul>
+  )
+}
+
+const PersonForm = ({addPerson, newName, handleNameAddition, handlePhoneAddition, newPhone}) => {
+  return (
+    <div>
+    <form onSubmit={addPerson}>
+       <div>
+         name: <input value={newName} onChange={handleNameAddition} />
+         <div>number: <input value={newPhone} onChange={handlePhoneAddition}/></div>
+       </div>
+       <div>
+         <button type="submit">add</button>
+       </div>
+     </form>  
+     </div>    
+  )
+}
+
+
 const App = () => {
   const [persons, setPersons] = useState([ 
   { name: 'Arto Hellas', number: '040-123456', id: 1 },
@@ -27,18 +67,16 @@ setPersons(persons.concat(personObject));
 
   };
 
+  // const getFilteredNames = () => {
+  //   if (!searchResult) return persons
+  //   return persons.filter(person => person.name.toLowerCase().startsWith(searchResult.toLowerCase()))
+  // }
 
-  const getFilteredNames = () => {
-    if (!searchResult) return persons
-    return persons.filter(person => person.name.toLowerCase().startsWith(searchResult.toLowerCase()))
-  }
-
-  const filteredNames = getFilteredNames()
-
+  // const filteredNames = getFilteredNames()
+  
   const handleNameAddition = (event) => {
     setNewName(event.target.value);
   };
-
 
   const handleSearch = (event) => {
     setSearchResult(event.target.value);
@@ -48,28 +86,15 @@ setPersons(persons.concat(personObject));
     setNewPhone(event.target.value);
   };
 
+
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>
-      filter starts with: <input value={searchResult} onChange={handleSearch} />
-      </div>
-      <h2>add new</h2>
-      <form onSubmit={addPerson}>
-        <div>
-          name: <input value={newName} onChange={handleNameAddition} />
-          <div>number: <input value={newPhone} onChange={handlePhoneAddition}/></div>
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
-      <ul>
-        {filteredNames.map((person) => (
-          <li key={person.name}>{person.name} {person.phone}</li>
-        ))}
-      </ul>
+<Filter searchResult={searchResult} handleSearch={handleSearch}/>
+      <h3>add new</h3>
+<PersonForm addPerson={addPerson} newName={newName} handleNameAddition={handleNameAddition} handlePhoneAddition={handlePhoneAddition} newPhone={newPhone} /> 
+      <h3>Numbers</h3>
+<Persons persons={persons} searchResult={searchResult}/>
     </div>
   );
 };
