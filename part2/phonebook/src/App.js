@@ -63,19 +63,18 @@ const App = () => {
 
 const addPerson = (event) => {
   event.preventDefault();
-  addressService
-  .create(personObject)
-  .then(returnedPerson => {
-    if (persons.find(p => p.name === newName)) {
-      window.alert(`${newName} is already added to the phonebook`);
-      return false;
-    }
-    setPersons(persons.concat(returnedPerson));
-    setNewName("")
-    setNewPhone("")
-
-  })
+  if (persons.find(p => p.name === newName)) {
+    window.alert(`${newName} is already added to the phonebook`)
+  } else {
+    addressService
+    .create(personObject)
+    .then(returnedPerson => {
+      setPersons(persons.concat(returnedPerson));
+      setNewName("")
+      setNewPhone("")
+    })
   }
+}
 
   
   const handleNameAddition = (event) => {
