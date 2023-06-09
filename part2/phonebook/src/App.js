@@ -18,14 +18,24 @@ const Persons = ({persons, searchResult, removePerson}) => {
   const filteredNames = getFilteredNames()
   return (
     <ul>
-    {filteredNames.map((person) => (
-      <li key={person.name}>
-        {person.name} {person.phone}
-        <button onClick={(event) => removePerson(event, person.id)}>remove</button>      </li>
-    ))}
+   {filteredNames.map((person) => (
+  <li key={person.id}>
+    {person.name} {person.number}
+    <button onClick={(event) => {
+      let check = window.confirm(`Delete ${person.name}?`)
+      if (check) {
+        removePerson(event, person.id)
+      }
+      return 
+    }
+      }>remove</button>      
+  </li>
+))}
   </ul>
   )
 }
+
+
 
 const PersonForm = ({addPerson, newName, handleNameAddition, handlePhoneAddition, newPhone}) => {
   return (
@@ -60,7 +70,7 @@ const App = () => {
 
   const personObject = {
     name: newName,
-    phone: newPhone,
+    number: newPhone,
   };
 
 const addPerson = (event) => {
@@ -79,7 +89,6 @@ const addPerson = (event) => {
 }
 
 const removePerson = (event, id) => {
-  event.preventDefault();
   addressService.remove(id)
   .then(() => {
     setPersons(persons.filter(person => person.id !== id));
