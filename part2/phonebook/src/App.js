@@ -9,7 +9,7 @@ const Filter = ({searchResult, handleSearch}) => {
   </div>)
 }
 
-const Persons = ({persons, searchResult}) => {
+const Persons = ({persons, searchResult, removePerson}) => {
   const getFilteredNames = () => {
     if (!searchResult) return persons
     return persons.filter(person => person.name.toLowerCase().startsWith(searchResult.toLowerCase()))
@@ -19,7 +19,9 @@ const Persons = ({persons, searchResult}) => {
   return (
     <ul>
     {filteredNames.map((person) => (
-      <li key={person.name}>{person.name} {person.phone}</li>
+      <li key={person.name}>
+        {person.name} {person.phone}
+        <button onClick={(event) => removePerson(event, person.id)}>remove</button>      </li>
     ))}
   </ul>
   )
@@ -76,6 +78,14 @@ const addPerson = (event) => {
   }
 }
 
+const removePerson = (event, id) => {
+  event.preventDefault();
+  addressService.remove(id)
+  .then(() => {
+    setPersons(persons.filter(person => person.id !== id));
+  });
+}
+
   
   const handleNameAddition = (event) => {
     setNewName(event.target.value);
@@ -89,7 +99,6 @@ const addPerson = (event) => {
     setNewPhone(event.target.value);
   };
 
-
   return (
     <div>
       <h2>Phonebook</h2>
@@ -97,7 +106,7 @@ const addPerson = (event) => {
       <h3>add new</h3>
 <PersonForm addPerson={addPerson} newName={newName} handleNameAddition={handleNameAddition} handlePhoneAddition={handlePhoneAddition} newPhone={newPhone} /> 
       <h3>Numbers</h3>
-<Persons persons={persons} searchResult={searchResult}/>
+<Persons persons={persons} searchResult={searchResult} removePerson={removePerson}/>
     </div>
   );
 };
