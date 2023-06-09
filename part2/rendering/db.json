@@ -22,13 +22,23 @@
     },
     {
       "content": "new",
-      "important": true,
+      "important": false,
       "id": 5
     },
     {
       "content": "hahhaa",
-      "important": true,
+      "important": false,
       "id": 6
+    },
+    {
+      "content": "asdasd",
+      "important": false,
+      "id": 7
+    },
+    {
+      "content": "sdasdasd",
+      "important": false,
+      "id": 8
     }
   ]
 }
