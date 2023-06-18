@@ -65,11 +65,16 @@ const PersonForm = ({
   );
 };
 
+const Notification = ({ message }) => {
+  return <div className="message">{message}</div>;
+};
+
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newPhone, setNewPhone] = useState("");
   const [searchResult, setSearchResult] = useState("");
+  const [notification, setNotification] = useState("");
 
   useEffect(() => {
     addressService.getAll().then((initialPhonebook) => {
@@ -125,6 +130,12 @@ const App = () => {
             setNewName("");
             setNewPhone("");
           })
+          .then(() => {
+            setNotification(`Updated ${newName}`);
+            setTimeout(() => {
+              setNotification(null);
+            }, 5000);
+          })
           .catch((error) => {
             console.error("Error updating person:", error);
           });
@@ -134,13 +145,18 @@ const App = () => {
         name: newName,
         number: newPhone,
       };
-
       addressService
         .create(personObject)
         .then((createdPerson) => {
           setPersons(persons.concat(createdPerson));
           setNewName("");
           setNewPhone("");
+        })
+        .then(() => {
+          setNotification(`Added ${newName}`);
+          setTimeout(() => {
+            setNotification(null);
+          }, 5000);
         })
         .catch((error) => {
           console.error("Error creating person:", error);
@@ -151,6 +167,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={notification} />
       <Filter searchResult={searchResult} handleSearch={handleSearch} />
       <h3>add new</h3>
       <PersonForm
