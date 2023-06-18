@@ -69,12 +69,17 @@ const Notification = ({ message }) => {
   return <div className="message">{message}</div>;
 };
 
+const Error = ({ message }) => {
+  return <div className="error">{message}</div>;
+};
+
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newPhone, setNewPhone] = useState("");
   const [searchResult, setSearchResult] = useState("");
   const [notification, setNotification] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     addressService.getAll().then((initialPhonebook) => {
@@ -137,7 +142,12 @@ const App = () => {
             }, 5000);
           })
           .catch((error) => {
-            console.error("Error updating person:", error);
+            setError(
+              `Information of ${newName} has already been removed from the server`
+            );
+            setPersons(
+              persons.filter((person) => person.id !== existingPerson.id)
+            );
           });
       }
     } else {
@@ -159,7 +169,7 @@ const App = () => {
           }, 5000);
         })
         .catch((error) => {
-          console.error("Error creating person:", error);
+          console.log("Error creating user", error);
         });
     }
   };
@@ -168,6 +178,7 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
       <Notification message={notification} />
+      <Error message={error} />
       <Filter searchResult={searchResult} handleSearch={handleSearch} />
       <h3>add new</h3>
       <PersonForm
