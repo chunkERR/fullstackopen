@@ -169,7 +169,8 @@ const App = () => {
           }, 5000);
         })
         .catch((error) => {
-          console.log("Error creating user", error);
+          setError(error.response.data.error);
+          
         });
     }
   };
