@@ -83,58 +83,74 @@ const App = () => {
         })
     }
 
-  return (
-    <div>
-      <h1>Notes app</h1>
-      <Notification message={errorMessage} />
-
-      <h2>Login</h2>
+    const loginForm = () => (
       <form onSubmit={handleLogin}>
         <div>
           username
-            <input
-            type="text"
-            value={username}
-            name="Username"
-            onChange={({ target }) => setUsername(target.value)}
+          <input
+          type='text'
+          value={username}
+          name='Username'
+          onChange={({target}) => setUsername(target.value)}
           />
         </div>
         <div>
           password
-            <input
-            type="password"
-            value={password}
-            name="Password"
-            onChange={({ target }) => setPassword(target.value)}
+          <input
+          type='text'
+          value={password}
+          name='Password'
+          onChange={({target}) => setPassword(target.value)}
           />
         </div>
-        <button type="submit">login</button>
+        <button type='submit'>login</button>
       </form>
+      )
 
-
-      <div>
-        <button onClick={() => setShowAll(!showAll)}>
-          show {showAll ? 'important' : 'all' }
-        </button>
-      </div> 
-      <ul>
-        <ul>
-          {notesToShow.map(note => 
-            <Note
-              key={note.id}
-              note={note}
-              toggleImportance={() => toggleImportanceOf(note.id)}
-            />
-          )}
-        </ul>
-      </ul>
-      <form onSubmit={addNote}>
-        <input value={newNote} onChange={handleNoteChange} />
-        <button type="submit">save</button>
+      const noteForm = () => (
+        <form onSubmit={addNote}>
+          <input
+          type='text'
+          value={newNote}
+          name='Password'
+          onChange={handleNoteChange}
+          />
+        <button type='submit'>save</button>
       </form>
-      <Footer />
-    </div>
-  )
-}
+      )
+
+      return (
+        <div>
+          <h1>Notes app</h1>
+          <Notification message={errorMessage} />
+    
+          {!user && loginForm()} 
+          {user && <div>
+            <p>{user.name} logged in</p>
+              {noteForm()}
+            </div>
+          } 
+     
+          <div>
+            <button onClick={() => setShowAll(!showAll)}>
+              show {showAll ? 'important' : 'all' }
+            </button>
+          </div> 
+          <ul>
+            <ul>
+              {notesToShow.map(note => 
+                <Note
+                  key={note.id}
+                  note={note}
+                  toggleImportance={() => toggleImportanceOf(note.id)}
+                />
+              )}
+            </ul>
+          </ul>
+    
+          <Footer />
+        </div>
+      )
+    }
 
 export default App
