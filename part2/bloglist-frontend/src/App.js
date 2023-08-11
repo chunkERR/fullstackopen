@@ -82,6 +82,10 @@ const App = () => {
       .then(returnedBlog => {
         setBlogs(blogs.concat(returnedBlog));
         setNewBlog('');
+        setErrorMessage(`${title} by ${author} added`)
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 5000);
       })
       .catch(error => {
         setErrorMessage(error.response.data.error);
