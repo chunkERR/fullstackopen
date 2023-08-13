@@ -9,14 +9,12 @@ import Togglable from './components/Togglable'
 
 
 const App = () => {
-  const [loginVisible, setLoginVisible] = useState(false)
   const [blogs, setBlogs] = useState([]);
   const [newBlog, setNewBlog] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [user, setUser] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-
 
   useEffect(() => {
     blogService.getAll()
@@ -124,7 +122,6 @@ const App = () => {
           </Togglable>
         </div>
       }
-
       {blogs.map(blog => (
         <Blog key={blog.id} blog={blog} />
       ))}

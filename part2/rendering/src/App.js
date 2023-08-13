@@ -79,11 +79,8 @@ noteFormRef.current.toggleVisibility()
       })
   }
 
-  const handleNoteChange = (event) => {
-    setNewNote(event.target.value)
-  }
-
-  const notesToShow = showAll
+ 
+ const notesToShow = showAll
     ? notes
     : notes.filter(note => note.important)
 
