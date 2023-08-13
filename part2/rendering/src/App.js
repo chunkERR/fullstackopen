@@ -57,6 +57,16 @@ const App = () => {
     }
   }
 
+  const handleLogout = async (event) => {
+    event.preventDefault();
+    try {
+      window.localStorage.removeItem('loggedBlogappUser');
+      setUser(null);
+    } catch (exception) {
+      console.log(exception);
+    }
+  };
+
   const addNote = (event) => {
     event.preventDefault()
     const noteObject = {
@@ -99,6 +109,13 @@ const App = () => {
         })
    }
   
+
+   const logoutButton = () => (
+    <button onClick={handleLogout} type="submit">
+      logout
+    </button>
+  );
+
   return (
     <div>
       <h1>Notes app</h1>
@@ -120,6 +137,7 @@ const App = () => {
           <p>{user.name} logged in</p>
           <Togglable buttonLabel="new note">
             <NoteForm createNote={addNote} />
+            {logoutButton()}
           </Togglable>
         </div>
       }
