@@ -14,13 +14,21 @@ const Blog = ({ blog }) => {
 
   return (
     <div style={blogStyle}>
-      {blog.title} {blog.author}
+      <p>{blog.title} by {blog.author}</p>
       <button onClick={() => setBlogDetails(!blogDetails)}>{label}</button>
       {blogDetails && 
       <div>
         {blog.url}
         <br></br>
         {blog.likes} <button>like</button>
+        <br></br>
+        {!blog.user &&
+        <p>No user assigned to this blog</p>}
+        {blog.user &&
+        <p>
+        {blog.user.name}
+        </p>
+        }
         </div>}
     </div>
   );
