@@ -97,23 +97,29 @@ const App = () => {
     </button>
   );
 
-  const addLike = id => {
-    const blog = blogs.find(n => n.id === id);
-    const changedBlog = { ...blog, likes: blog.likes + 1 }; // Increment likes
-  
-    blogService
-      .update(id, changedBlog)
-      .then(returnedBlog => {
-        setBlogs(blogs.map(blog => (blog.id === id ? returnedBlog : blog))); // Update specific blog with returnedBlog
-      })
-      .catch(error => {
-        setErrorMessage(error.response.data.error);
-        setTimeout(() => {
-          setErrorMessage(null);
-        }, 5000);
-      });
-  };
-  
+
+const updateBlog = async (id, title, author, url, userId, likes) => {
+    try {
+      const updatedBlog = await blogService
+      .update(id, title, author, url, userId, likes)
+      setErrorMessage(
+        `Blog was successfully updated`
+      )
+      setBlogs(blogs.map(blog => blog.id !== id ? blog : updatedBlog))
+      setErrorMessage(null)
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    } catch(exception) {
+      setErrorMessage(
+        `Cannot update blog.`
+      )
+      setErrorMessage(null)
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
 
   return (
     <div>
@@ -141,7 +147,7 @@ const App = () => {
         </div>
       }
       {blogs.map(blog => (
-        <Blog key={blog.id} blog={blog} addLike={addLike}/>
+        <Blog key={blog.id} blog={blog} updateBlog={updateBlog}/>
       ))}
     </div>
   );

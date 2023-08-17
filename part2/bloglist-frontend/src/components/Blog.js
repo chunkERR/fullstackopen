@@ -1,7 +1,7 @@
 import { useState } from "react"
 
 
-const Blog = ({ blog, addLike }) => {
+const Blog = ({ blog, updateBlog }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -11,10 +11,32 @@ const Blog = ({ blog, addLike }) => {
   }
 
   const [blogDetails, setBlogDetails] = useState(false);
+  const [blogObject, setBlogObject] = useState(blog)
   const label = blogDetails ? 'hide' : 'view'
 
+  const increaseLikes = async () => {
+    try {
+    const updatedBlog = {
+      ...blogObject,
+      likes: blogObject.likes + 1,
+    };
 
+    console.log(updatedBlog)
 
+    setBlogObject(updatedBlog);
+
+    await updateBlog(updatedBlog.id, {
+      title: updatedBlog.title,
+      url: updatedBlog.url,
+      author: updatedBlog.author,
+      likes: updatedBlog.likes,
+      user: updatedBlog.user // Assuming user is an object with an id property
+    });
+    } catch (error) {
+      console.error('Error updating like on server:', error);
+    }}
+
+  
 
   return (
     <div style={blogStyle}>
@@ -24,15 +46,10 @@ const Blog = ({ blog, addLike }) => {
       <div>
         {blog.url}
         <br></br>
-        {blog.likes} <button onClick={() => addLike(blog.id)}>like</button>
+        {blog.likes} <button onClick={increaseLikes}>like</button>
         <br></br>
-        {!blog.user &&
-        <p>No user assigned to this blog</p>}
-        {blog.user &&
-        <p>
-        {blog.user.name}
-        </p>
-        }
+        {!blog.user && <p>No user assigned to this blog</p>}
+        {blog.user &&<p>{blog.user.name}</p>}
         </div>}
     </div>
   );
