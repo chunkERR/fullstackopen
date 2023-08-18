@@ -98,10 +98,10 @@ const App = () => {
   );
 
 
-const updateBlog = async (id, title, author, url, userId, likes) => {
+const updateBlog = async (id, updatedFields) => {
     try {
       const updatedBlog = await blogService
-      .update(id, title, author, url, userId, likes)
+      .update(id, updatedFields)
       setErrorMessage(
         `Blog was successfully updated`
       )

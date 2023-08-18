@@ -32,6 +32,7 @@ const Blog = ({ blog, updateBlog }) => {
       likes: updatedBlog.likes,
       user: updatedBlog.user // Assuming user is an object with an id property
     });
+
     } catch (error) {
       console.error('Error updating like on server:', error);
     }}
