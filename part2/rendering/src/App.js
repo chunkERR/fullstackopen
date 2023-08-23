@@ -14,7 +14,7 @@ const App = () => {
   const [showAll, setShowAll] = useState(true)
   const [errorMessage, setErrorMessage] = useState(null)
 
-  const [username, setUsername] = useState('') 
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [loginVisible, setLoginVisible] = useState(false)
@@ -48,7 +48,7 @@ const App = () => {
       noteService.setToken(user.token)
       window.localStorage.setItem(
         'loggedNoteappUser', JSON.stringify(user)
-      ) 
+      )
       setUser(user)
       setUsername('')
       setPassword('')
@@ -61,54 +61,54 @@ const App = () => {
   }
 
   const handleLogout = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
     try {
-      window.localStorage.removeItem('loggedBlogappUser');
-      setUser(null);
+      window.localStorage.removeItem('loggedBlogappUser')
+      setUser(null)
     } catch (exception) {
-      console.log(exception);
+      console.log(exception)
     }
-  };
+  }
 
   const addNote = (noteObject) => {
-noteFormRef.current.toggleVisibility()
+    noteFormRef.current.toggleVisibility()
     noteService
       .create(noteObject)
-        .then(returnedNote => {
+      .then(returnedNote => {
         setNotes(notes.concat(returnedNote))
       })
   }
 
- 
- const notesToShow = showAll
+
+  const notesToShow = showAll
     ? notes
     : notes.filter(note => note.important)
 
   const toggleImportanceOf = id => {
-      const note = notes.find(n => n.id === id)
-      const changedNote = { ...note, important: !note.important }
-  
-      noteService
-        .update(id, changedNote).then(returnedNote => {
-          setNotes(notes.map(note => note.id !== id ? note : returnedNote))
-        })
-        .catch(error => {
-          setErrorMessage(
-            `Note '${note.content}' was already removed from server`
-          )
-          setTimeout(() => {
-            setErrorMessage(null)
-          }, 5000)
-          setNotes(notes.filter(n => n.id !== id))
-        })
-   }
-  
+    const note = notes.find(n => n.id === id)
+    const changedNote = { ...note, important: !note.important }
 
-   const logoutButton = () => (
+    noteService
+      .update(id, changedNote).then(returnedNote => {
+        setNotes(notes.map(note => note.id !== id ? note : returnedNote))
+      })
+      .catch(error => {
+        setErrorMessage(
+          `Note '${note.content}' was already removed from server`
+        )
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+        setNotes(notes.filter(n => n.id !== id))
+      })
+  }
+
+
+  const logoutButton = () => (
     <button onClick={handleLogout} type="submit">
       logout
     </button>
-  );
+  )
 
   return (
     <div>
@@ -135,15 +135,15 @@ noteFormRef.current.toggleVisibility()
           </Togglable>
         </div>
       }
- 
+
       <div>
         <button onClick={() => setShowAll(!showAll)}>
           show {showAll ? 'important' : 'all' }
         </button>
-      </div> 
+      </div>
       <ul>
         <ul>
-          {notesToShow.map(note => 
+          {notesToShow.map(note =>
             <Note
               key={note.id}
               note={note}
