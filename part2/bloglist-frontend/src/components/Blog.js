@@ -1,7 +1,6 @@
 import { useState } from "react"
 
-
-const Blog = ({ blog, updateBlog }) => {
+const Blog = ({ blog, updateBlog, deleteBlog }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -37,6 +36,8 @@ const Blog = ({ blog, updateBlog }) => {
       console.error('Error updating like on server:', error);
     }}
 
+
+    const removeBlog = () => deleteBlog(blog)
   
 
   return (
@@ -47,10 +48,11 @@ const Blog = ({ blog, updateBlog }) => {
       <div>
         {blog.url}
         <br></br>
-        <p>likes: {blog.likes}</p> <button onClick={increaseLikes}>like</button>
+        <p>likes: {blog.likes}  </p> <button onClick={increaseLikes}>like</button>
         <br></br>
         {!blog.user && <p>No user assigned to this blog</p>}
         {blog.user &&<p>{blog.user.name}</p>}
+        <button onClick={removeBlog}>remove</button>
         </div>}
     </div>
   );

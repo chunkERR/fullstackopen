@@ -15,6 +15,8 @@ const App = () => {
   const [password, setPassword] = useState('');
   const [user, setUser] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+
 
   useEffect(() => {
     blogService.getAll()
@@ -78,14 +80,16 @@ const App = () => {
         setBlogs(blogs.concat(returnedBlog));
         blogFormRef.current.toggleVisibility()
         setNewBlog('');
-        setErrorMessage(`${returnedBlog.title} by ${returnedBlog.author} added`)
+        setSuccessMessage(`${returnedBlog.title} by ${returnedBlog.author} added`)
         setTimeout(() => {
+          setSuccessMessage(null);
           setErrorMessage(null);
         }, 5000);
       })
       .catch(error => {
         setErrorMessage(error.response.data.error);
         setTimeout(() => {
+          setSuccessMessage(null)
           setErrorMessage(null);
         }, 5000);
       });
@@ -102,7 +106,7 @@ const updateBlog = async (id, updatedFields) => {
     try {
       const updatedBlog = await blogService
       .update(id, updatedFields)
-      setErrorMessage(
+      setSuccessMessage(
         `Blog was successfully updated`
       )
       setBlogs(blogs.map(blog => blog.id !== id ? blog : updatedBlog))
@@ -120,6 +124,32 @@ const updateBlog = async (id, updatedFields) => {
       }, 5000)
     }
   }
+
+  const deleteBlog = async (BlogToDelete) => {
+    try {
+      if (window.confirm(`Delete ${BlogToDelete.title} ?`)) {
+        blogService
+          .remove(BlogToDelete.id)
+        setErrorMessage(
+          `Blog ${BlogToDelete.title} was successfully deleted`
+        )
+        setBlogs(blogs.filter(blog => blog.id !== BlogToDelete.id))
+        setErrorMessage(null)
+        setTimeout(() => {
+          setSuccessMessage(null)
+        }, 5000)
+      }
+    } catch(exception) {
+      setErrorMessage(
+        `Cannot delete blog ${BlogToDelete.title}`
+      )
+      setErrorMessage(null)
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
+
 
   const sortedBlogs = [...blogs].sort((a, b) => b.likes - a.likes);
 
@@ -149,7 +179,7 @@ const updateBlog = async (id, updatedFields) => {
         </div>
       }
       {sortedBlogs.map(blog => (
-        <Blog key={blog.id} blog={blog} updateBlog={updateBlog}/>
+        <Blog key={blog.id} blog={blog} updateBlog={updateBlog} deleteBlog={deleteBlog}/>
       ))}
     </div>
   );
