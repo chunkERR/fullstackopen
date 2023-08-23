@@ -29,7 +29,7 @@ const Blog = ({ blog, updateBlog, deleteBlog }) => {
       url: updatedBlog.url,
       author: updatedBlog.author,
       likes: updatedBlog.likes,
-      user: updatedBlog.user // Assuming user is an object with an id property
+      user: updatedBlog.id // Assuming user is an object with an id property
     });
 
     } catch (error) {
