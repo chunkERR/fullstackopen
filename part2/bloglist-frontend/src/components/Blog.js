@@ -41,7 +41,7 @@ const Blog = ({ blog, updateBlog, deleteBlog }) => {
   
 
   return (
-    <div style={blogStyle}>
+<div style={blogStyle}>
       <p>{blog.title} by {blog.author}</p>
       <button onClick={() => setBlogDetails(!blogDetails)}>{label}</button>
       {blogDetails && 
