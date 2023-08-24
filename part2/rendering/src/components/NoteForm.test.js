@@ -5,15 +5,15 @@ import NoteForm from './NoteForm'
 import userEvent from '@testing-library/user-event'
 
 test('<NoteForm /> updates parent state and calls onSubmit', async () => {
-  const createNote = jest.fn()
   const user = userEvent.setup()
+  const createNote = jest.fn()
 
   render(<NoteForm createNote={createNote} />)
 
-  const inputs = screen.getAllByRole('textbox')
+  const input = screen.getByRole('textbox')
   const sendButton = screen.getByText('save')
 
-  await user.type(inputs[0], 'testing a form...')
+  await user.type(input, 'testing a form...')
   await user.click(sendButton)
 
   expect(createNote.mock.calls).toHaveLength(1)

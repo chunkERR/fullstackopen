@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import Note from './Note'
 
 const NoteForm = ({ createNote }) => {
   const [newNote, setNewNote] = useState('')
@@ -11,9 +10,9 @@ const NoteForm = ({ createNote }) => {
       important: true
     })
 
-
     setNewNote('')
   }
+
   return (
     <div>
       <h2>Create a new note</h2>
@@ -22,13 +21,11 @@ const NoteForm = ({ createNote }) => {
         <input
           value={newNote}
           onChange={event => setNewNote(event.target.value)}
-          placeholder='write note content here'
         />
         <button type="submit">save</button>
       </form>
     </div>
   )
 }
-
 
 export default NoteForm
