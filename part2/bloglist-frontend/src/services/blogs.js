@@ -4,6 +4,7 @@ const baseUrl = '/api/blogs'
 let token = null
 let config
 
+
 const setToken = newToken => {
   token = `bearer ${newToken}`
   config = {
@@ -21,14 +22,13 @@ const create = async newObject => {
   return response.data
 }
 
-const update = async id => {
-  const response = await axios.put(`${baseUrl}/${id}`, config)
-  return response.data
+const update = async (object) => {
+  const request = await axios.put(`${baseUrl}/${object.id}`, object)
+  return request.data
 }
 
-const remove = async id => {
-  const response = await axios.delete(`${baseUrl}/${id}`, config)
-  return response.data
+const remove = async (id) => {
+  await axios.delete(`${baseUrl}/${id}`, config)
 }
 
 

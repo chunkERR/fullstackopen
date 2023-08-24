@@ -44,7 +44,6 @@ module.exports = {
       "react/prop-types": 0,
       "react/react-in-jsx-scope": "off",
       "react/prop-types": 0,
-      "no-unused-vars": 0,
-      "parser": "@babel/eslint-parser"
+      "no-unused-vars": 0    
     },
   }
