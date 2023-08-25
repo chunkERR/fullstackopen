@@ -10,7 +10,6 @@ const Blog = ({ blog, like, deleteBlog }) => {
   }
 
   const [blogDetails, setBlogDetails] = useState(false)
-  const [blogObject, setBlogObject] = useState(blog)
   const label = blogDetails ? 'hide' : 'view'
 
   const removeBlog = () => deleteBlog(blog)
@@ -24,7 +23,7 @@ const Blog = ({ blog, like, deleteBlog }) => {
       <div>
         {blog.url}
         <br></br>
-        <p>likes: {blog.likes}  </p> <button onClick={like}>like</button>
+        <p>likes: {blog.likes}  </p> <button onClick={like} data-testid='like-button'>like</button>
         <br></br>
         {!blog.user && <p>No user assigned to this blog</p>}
         {blog.user &&<p>{blog.user.name}</p>}
