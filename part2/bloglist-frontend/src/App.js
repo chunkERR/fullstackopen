@@ -1,3 +1,4 @@
+import React from 'react'
 import { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import LoginForm from './components/LoginForm'
@@ -125,7 +126,8 @@ const App = () => {
   }
 
 
-  const byLikes = (b1, b2) => b2.likes - b1.likes
+  const sorted = blogs.sort((a, b) => b.likes - a.likes)
+  console.log(sorted)
 
   return (
     <div>
@@ -152,9 +154,14 @@ const App = () => {
           </Togglable>
         </div>
       }
-      {blogs.sort(byLikes).map(blog => (
-        <Blog key={blog.id} blog={blog} like={() => like(blog)} deleteBlog={deleteBlog}/>
-      ))}
+      {sorted.map(blog =>
+        <Blog
+          key={blog.id}
+          blog={blog}
+          like={() => like(blog)}
+          deleteBlog={deleteBlog}
+        />
+      )}
     </div>
   )
 }
