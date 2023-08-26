@@ -17,8 +17,7 @@
     "eject": "react-scripts eject",
     "server": "json-server -p3001 --watch db.json",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "cypress:open": "cypress open",
-    "start:test": "NODE_ENV=test node index.js"
+    "cypress:open": "cypress open"
   },
   "eslintConfig": {
     "extends": [
