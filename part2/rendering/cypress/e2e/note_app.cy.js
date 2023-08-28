@@ -27,53 +27,34 @@ describe('Note', function() {
 
   })
 
-  it('login fails with wrong password', function() {
-    cy.contains('log in').click()
-    cy.get('#username').type('mluukkai')
-    cy.get('#password').type('wrong')
-    cy.get('#login-button').click()
-
-    cy.get('.error')
-    .should('contain', 'wrong credentials')
-    .and('have.css', 'color', 'rgb(255, 0, 0)')
-    .and('have.css', 'border-style', 'solid')
-
-    cy.contains('Matti Luukkainen logged in').should('not.exist')
-    })
-
-
-
     describe('when logged in', function() {
       beforeEach(function() {
-        cy.login({ username: 'mluukkai', password: 'salainen' })
-      })
+          cy.login({ username: 'mluukkai', password: 'salainen' })
+        })
+
+        it('a new note can be created', function() {
+          cy.contains('new note').click()
+          cy.get('input').type('a note created by cypress')
+          cy.contains('save').click()
+          cy.contains('a note created by cypress')
+        })
   
-      it('a new note can be created', function() {
-        cy.contains('new note').click()
-        cy.get('input').type('a note created by cypress')
-        cy.contains('save').click()
-        cy.contains('a note created by cypress')
-      })
-  
+      
       describe('and a note exists', function () {
         beforeEach(function () {
-          cy.createNote({
-            content: 'another note cypress',
-            important: true
+          cy.createNote({content: 'first note', important: false})
+          cy.createNote({content: 'second note', important: false})
+          cy.createNote({content: 'third note', important: false})
+          })
+    
+        it('one of those can be made important', function () {
+              cy.contains('second note').parent().find('button').as('theButton')
+              cy.get('@theButton').click()
+              cy.get('@theButton').should('contain', 'make not important')
+            })
           })
         })
-  
-        it('it can be made important', function () {
-          cy.contains('another note cypress')
-            .contains('make not important')
-            .click()
-  
-          cy.contains('another note cypress')
-            .contains('make important')
-        })
-      })
-    })
-
+      
     it('login fails with wrong password', function() {
       cy.contains('log in').click()
       cy.get('#username').type('mluukkai')
@@ -84,5 +65,5 @@ describe('Note', function() {
         .should('contain', 'wrong credentials')
         .and('have.css', 'color', 'rgb(255, 0, 0)')
         .and('have.css', 'border-style', 'solid')
-    })
+    })  
   })
