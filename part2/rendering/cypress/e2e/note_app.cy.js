@@ -1,7 +1,14 @@
 /* eslint-disable no-undef */
 describe('Note app', function() {
 
-  beforeEach(function() {    
+  beforeEach(function() {
+    cy.request('POST', 'http://localhost:3001/api/testing/reset')
+    const user = {
+      name: 'Matti Luukkainen',
+      username: 'mluukkai',
+      password: 'salainen'
+    }
+    cy.request('POST', 'http://localhost:3001/api/users/', user)
     cy.visit('http://localhost:3000')  
   })
   it('front page can be opened', function() {
@@ -28,7 +35,7 @@ describe('Note app', function() {
     })
 
     it('a new note can be created', function() {
-      cy.get('#note-button').click()
+      cy.get('#note-button').click(); // Interact with the button
       cy.get('input').type('a note created by cypress')
       cy.contains('save').click()
       cy.contains('a note created by cypress')
