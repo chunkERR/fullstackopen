@@ -48,6 +48,10 @@ describe('Blog app', function() {
     })
     it('a blog can be created', function() {
       cy.contains('new blog').click()
+      cy.get('#title').type('Blog created by Cypress')
+      cy.get('#author').type('Cypress')
+      cy.get('#url').type('whatever')
+      cy.contains('create').click()
     })
   })
 })
