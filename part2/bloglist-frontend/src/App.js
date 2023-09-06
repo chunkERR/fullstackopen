@@ -1,5 +1,4 @@
-import React from 'react'
-import { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
@@ -7,7 +6,6 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
-
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -18,8 +16,7 @@ const App = () => {
   const [info, setInfo] = useState({ message: null })
 
   useEffect(() => {
-    blogService.getAll()
-      .then(blogs => setBlogs(blogs))
+    blogService.getAll().then((blogs) => setBlogs(blogs))
   }, [])
 
   useEffect(() => {
@@ -31,19 +28,18 @@ const App = () => {
     }
   }, [])
 
-  const notifyWith = (message, type='info') => {
+  const notifyWith = (message, type = 'info') => {
     setInfo({
-      message, type
+      message,
+      type,
     })
 
     setTimeout(() => {
-      setInfo({ message: null } )
+      setInfo({ message: null })
     }, 3000)
   }
 
-
   const blogFormRef = useRef()
-
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -54,10 +50,7 @@ const App = () => {
         password,
       })
 
-      window.localStorage.setItem(
-        'loggedBlogappUser',
-        JSON.stringify(user)
-      )
+      window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
 
       blogService.setToken(user.token)
       setUser(user)
@@ -78,18 +71,16 @@ const App = () => {
     }
   }
 
-
   const addBlog = (blogObject) => {
-
     blogService
       .create(blogObject)
-      .then(returnedBlog => {
+      .then((returnedBlog) => {
         setBlogs(blogs.concat(returnedBlog))
         blogFormRef.current.toggleVisibility()
         setNewBlog('')
         notifyWith(`${returnedBlog.title} by ${returnedBlog.author} added`)
       })
-      .catch(error => {
+      .catch((error) => {
         notifyWith(error.response.data.error)
       })
   }
@@ -100,41 +91,33 @@ const App = () => {
     </button>
   )
 
-
   const like = async (blog) => {
     const blogToUpdate = { ...blog, likes: blog.likes + 1, user: blog.user.id }
     const updatedBlog = await blogService.update(blogToUpdate)
     notifyWith(`A like for the blog '${blog.title}' by '${blog.author}'`)
-    setBlogs(blogs.map(b => b.id === blog.id ? updatedBlog : b))
+    setBlogs(blogs.map((b) => (b.id === blog.id ? updatedBlog : b)))
   }
 
   const deleteBlog = async (BlogToDelete) => {
     try {
       if (window.confirm(`Delete ${BlogToDelete.title} ?`)) {
-        blogService
-          .remove(BlogToDelete.id)
-        notifyWith(
-          `Blog ${BlogToDelete.title} was successfully deleted`
-        )
-        setBlogs(blogs.filter(blog => blog.id !== BlogToDelete.id))
+        await blogService.remove(BlogToDelete.id)
+        notifyWith(`Blog ${BlogToDelete.title} was successfully deleted`)
+        setBlogs(blogs.filter((blog) => blog.id !== BlogToDelete.id))
       }
-    } catch(exception) {
-      notifyWith(
-        `Cannot delete blog ${BlogToDelete.title}`
-      )
+    } catch (exception) {
+      notifyWith(`Cannot delete blog ${BlogToDelete.title}`)
     }
   }
 
-
-  const sorted = blogs.sort((a, b) => b.likes - a.likes)
-  console.log(sorted)
+  const sorted = blogs.slice().sort((a, b) => b.likes - a.likes)
 
   return (
     <div>
       <h2>blogs</h2>
       <Notification info={info} />
 
-      {!user &&
+      {!user && (
         <Togglable buttonLabel="log in">
           <LoginForm
             username={username}
@@ -144,27 +127,25 @@ const App = () => {
             handleSubmit={handleLogin}
           />
         </Togglable>
-      }
-      {user &&
+      )}
+      {user && (
         <div>
-          <p>{user.name} logged in</p>
+          <p>{user.name} logged in {logoutButton()}</p>
           <Togglable buttonLabel="new blog" ref={blogFormRef}>
             <BlogForm createBlog={addBlog} />
-            {logoutButton()}
           </Togglable>
         </div>
-      }
-      {sorted.map(blog =>
+      )}
+      {sorted.map((blog) => (
         <Blog
           key={blog.id}
           blog={blog}
           like={() => like(blog)}
-          deleteBlog={deleteBlog}
+          deleteBlog={() => deleteBlog(blog)}
         />
-      )}
+      ))}
     </div>
   )
 }
-
 
 export default App

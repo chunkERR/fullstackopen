@@ -27,15 +27,13 @@ describe('Blog app', function() {
     })
 
     it('fails with the wrong credentials', function() {
-      cy.get('#toggle-button').click()
+      cy.get('#toggle-button').click({force: true})
       cy.get('#username').type('kuba')
       cy.get('#password').type('wrong')
       cy.get('#login-submit').click()
-      
-      cy.contains('wrong credentials')
+
+      cy.get('#notification')
+      .and('contain', 'Wrong credentials')
     })
   })
-
 })
-
-
