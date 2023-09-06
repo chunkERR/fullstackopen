@@ -33,7 +33,9 @@ describe('Blog app', function() {
       cy.get('#login-submit').click()
 
       cy.get('#notification')
-      .and('contain', 'Wrong credentials')
+      .should('contain', 'Wrong credentials')
+      .and('have.css', 'color', 'rgb(255, 0, 0)'
+      )
     })
   })
 })
