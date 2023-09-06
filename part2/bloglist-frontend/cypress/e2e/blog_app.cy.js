@@ -38,4 +38,16 @@ describe('Blog app', function() {
       )
     })
   })
+
+  describe('when logged in', function() {
+    beforeEach(function() {
+      cy.get('#toggle-button').click()
+      cy.get('#username').type('kuba')
+      cy.get('#password').type('Kojima')
+      cy.get('#login-submit').click()
+    })
+    it('a blog can be created', function() {
+      cy.contains('new blog').click()
+    })
+  })
 })
