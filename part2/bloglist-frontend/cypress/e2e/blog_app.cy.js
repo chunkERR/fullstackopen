@@ -7,6 +7,7 @@ describe('Blog app', function() {
 
   it('Login form is shown', function() {
     cy.get('#toggle-button').click()
-    
+    cy.contains('username')
+    cy.contains('password')
   })
 })
