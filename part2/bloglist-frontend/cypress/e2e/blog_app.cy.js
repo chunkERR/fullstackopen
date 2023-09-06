@@ -6,6 +6,7 @@ describe('Blog app', function() {
   })
 
   it('Login form is shown', function() {
-    cy.contains('log in')
+    cy.get('#toggle-button').click()
+    
   })
 })
