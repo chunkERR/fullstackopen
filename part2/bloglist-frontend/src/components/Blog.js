@@ -18,7 +18,7 @@ const Blog = ({ blog, like, deleteBlog }) => {
   return (
     <div style={blogStyle} className='blog'>
       <p>{blog.title} by {blog.author}</p>
-      <button onClick={() => setBlogDetails(!blogDetails)}>{label}</button>
+      <button id='expand-button' onClick={() => setBlogDetails(!blogDetails)}>{label}</button>
       {blogDetails &&
       <div>
         {blog.url}

@@ -8,7 +8,7 @@ describe('Blog app', function() {
       password: 'Kojima'
     }
     cy.request('POST', 'http://localhost:3003/api/users', user)
-    cy.visit('http://localhost:3000')
+    cy.visit('')
   })
 
   it('Login form is shown', function() {
@@ -23,6 +23,7 @@ describe('Blog app', function() {
       cy.get('#username').type('kuba')
       cy.get('#password').type('Kojima')
       cy.get('#login-submit').click()
+
       cy.contains('Kuba logged in')
     })
 
@@ -41,17 +42,21 @@ describe('Blog app', function() {
 
   describe('when logged in', function() {
     beforeEach(function() {
-      cy.get('#toggle-button').click()
-      cy.get('#username').type('kuba')
-      cy.get('#password').type('Kojima')
-      cy.get('#login-submit').click()
+      cy.login({username: 'kuba', password: 'Kojima'})
     })
+
     it('a blog can be created', function() {
       cy.contains('new blog').click()
       cy.get('#title').type('Blog created by Cypress')
       cy.get('#author').type('Cypress')
       cy.get('#url').type('whatever')
       cy.contains('create').click()
+
+      cy.contains('Blog created by Cypress')
     })
+
+    
+
+
   })
 })
