@@ -23,7 +23,7 @@ const Blog = ({ blog, like, deleteBlog }) => {
       <div>
         {blog.url}
         <br></br>
-        <p>likes: {blog.likes}  </p> <button onClick={like} data-testid='like-button'>like</button>
+        <p>likes: {blog.likes}  </p> <button id='like' onClick={like} data-testid='like-button'>like</button>
         <br></br>
         {!blog.user && <p>No user assigned to this blog</p>}
         {blog.user &&<p>{blog.user.name}</p>}
