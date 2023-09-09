@@ -98,18 +98,14 @@ const App = () => {
     setBlogs(blogs.map((b) => (b.id === blog.id ? updatedBlog : b)))
   }
 
-  const deleteBlog = async (BlogToDelete) => {
-    try {
-      if (window.confirm(`Delete ${BlogToDelete.title} ?`)) {
-        await blogService.remove(BlogToDelete.id)
-        notifyWith(`Blog ${BlogToDelete.title} was successfully deleted`)
-        setBlogs(blogs.filter((blog) => blog.id !== BlogToDelete.id))
-      }
-    } catch (exception) {
-      notifyWith(`Cannot delete blog ${BlogToDelete.title}`)
+  const remove = async (blog) => {
+    const ok = window.confirm(`Sure you want to remove '${blog.title}' by ${blog.author}`)
+    if (ok) {
+      await blogService.remove(blog.id)
+      notifyWith(`The blog '${blog.title}' by '${blog.author}' removed`)
+      setBlogs(blogs.filter(b => b.id !== blog.id))
     }
   }
-
   const sorted = blogs.slice().sort((a, b) => b.likes - a.likes)
 
   return (
@@ -141,7 +137,7 @@ const App = () => {
           key={blog.id}
           blog={blog}
           like={() => like(blog)}
-          deleteBlog={() => deleteBlog(blog)}
+          remove={() => remove(blog)}
         />
       ))}
     </div>

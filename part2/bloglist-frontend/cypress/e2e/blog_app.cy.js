@@ -45,6 +45,12 @@ describe('Blog app', function() {
     beforeEach(function() {
       cy.get('#toggle-button').click()
       cy.login({ username: 'kuba', password: 'Kojima' })
+      cy.createBlog({
+          title: 'To Be Removed',
+          author: 'Kuba',
+          url: 'idk.com'
+        })
+      })
 
     })
 
@@ -68,8 +74,8 @@ describe('Blog app', function() {
     beforeEach(function() {
       cy.login({ username: 'kuba', password: 'Kojima' })
       cy.createBlog({
-        title: 'You’re NOT gonna need it!',
-        author: 'Ron Jeffries',
+        title: 'To Be Removed',
+        author: 'Kuba',
         url: 'https://ronjeffries.com/xprog/articles/practices/pracnotneed//'
       })
     })
@@ -81,5 +87,16 @@ describe('Blog app', function() {
       cy.contains('likes: 1')
 
     })
+
+
+    it('it can be removed', function() {
+      cy.contains('To Be Removed')
+      .get('#expand-button').click()
+      .get('#remove').click()
+      cy.on('window:confirm', () => true);
+      cy.contains('removed')
+      cy.get('html').should('not.contain', 'To Be Removed')
+
+      
   })
 })

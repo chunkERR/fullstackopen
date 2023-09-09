@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const Blog = ({ blog, like, deleteBlog }) => {
+const Blog = ({ blog, like, remove }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -12,7 +12,7 @@ const Blog = ({ blog, like, deleteBlog }) => {
   const [blogDetails, setBlogDetails] = useState(false)
   const label = blogDetails ? 'hide' : 'view'
 
-  const removeBlog = () => deleteBlog(blog)
+  const removeBlog = () => remove(blog)
 
 
   return (
@@ -27,7 +27,7 @@ const Blog = ({ blog, like, deleteBlog }) => {
         <br></br>
         {!blog.user && <p>No user assigned to this blog</p>}
         {blog.user &&<p>{blog.user.name}</p>}
-        <button onClick={removeBlog}>remove</button>
+        <button id='remove' onClick={removeBlog}>remove</button>
       </div>}
     </div>
   )
