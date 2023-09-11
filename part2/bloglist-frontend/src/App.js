@@ -101,11 +101,25 @@ const App = () => {
   const remove = async (blog) => {
     const ok = window.confirm(`Sure you want to remove '${blog.title}' by ${blog.author}`)
     if (ok) {
-      await blogService.remove(blog.id)
-      notifyWith(`The blog '${blog.title}' by '${blog.author}' removed`)
-      setBlogs(blogs.filter(b => b.id !== blog.id))
+      try {
+        await blogService.remove(blog.id)
+        notifyWith(`The blog '${blog.title}' by '${blog.author}' removed`)
+        setBlogs(blogs.filter(b => b.id !== blog.id))
+      } catch (error) {
+        if (error.response && error.response.data && error.response.data.error) {
+          // Handle error when response data contains an error message.
+          notifyWith(`Error: ${error.response.data.error}`)
+        } else {
+          // Handle generic error.
+          notifyWith('An error occurred while removing the blog.')
+        }
+      }
     }
   }
+
+
+
+
   const sorted = blogs.slice().sort((a, b) => b.likes - a.likes)
 
   return (
