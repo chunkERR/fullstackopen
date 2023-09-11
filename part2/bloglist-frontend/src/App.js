@@ -81,7 +81,7 @@ const App = () => {
         notifyWith(`${returnedBlog.title} by ${returnedBlog.author} added`)
       })
       .catch((error) => {
-        notifyWith(error.response.data.error)
+        notifyWith(error.response.data.error, 'error')
       })
   }
 
@@ -111,7 +111,7 @@ const App = () => {
           notifyWith(`Error: ${error.response.data.error}`)
         } else {
           // Handle generic error.
-          notifyWith('An error occurred while removing the blog.')
+          notifyWith('An error occurred while removing the blog.', 'error')
         }
       }
     }

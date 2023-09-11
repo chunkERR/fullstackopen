@@ -72,10 +72,10 @@ describe('Blog app', function() {
 
   describe('When a blog has been created', function() {
     beforeEach(function() {
-      cy.login({ username: 'kuba', password: 'Kojima' })
+      cy.login({ username: 'hellas', password: 'secret' })
       cy.createBlog({
         title: 'To Be Removed',
-        author: 'Kuba',
+        author: 'hellas',
         url: 'https://ronjeffries.com/xprog/articles/practices/pracnotneed//'
       })
     })
@@ -96,7 +96,5 @@ describe('Blog app', function() {
       cy.on('window:confirm', () => true);
       cy.contains('removed')
       cy.get('html').should('not.contain', 'To Be Removed')
-
-      
   })
 })
