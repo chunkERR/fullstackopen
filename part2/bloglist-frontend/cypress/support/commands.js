@@ -28,19 +28,11 @@
 const STORAGE_KEY = 'bloggappUser'
 
 Cypress.Commands.add('login', ({ username, password }) => {
-  cy.request({
-    method: 'POST',
-    url: `${Cypress.env('BACKEND')}/login`,
-    body: { username, password },
-    failOnStatusCode: false, // Allow non-2xx responses for error handling
-  }).then((response) => {
-    if (response.status === 200) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(response.body))
-      cy.visit('')
-    } else {
-      // Handle login failure (e.g., show an error message)
-      cy.log(`Login failed with status: ${response.status}`)
-    }
+  cy.request('POST', `${Cypress.env('BACKEND')}/login`, {
+    username, password
+  }).then(({ body }) => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(body))
+    cy.visit('')
   })
 })
 

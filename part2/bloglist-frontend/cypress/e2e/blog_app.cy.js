@@ -7,6 +7,8 @@ describe('Blog app', function() {
       username: 'kuba',
       password: 'Kojima'
     })
+    .its('body')
+    .as('currentUser')
     cy.request('POST', `${Cypress.env('BACKEND')}/users`, {
       name: 'Arto Hellas',
       username: 'hellas',
@@ -119,12 +121,12 @@ describe('Blog app', function() {
     })
 
     it('those are ordered by the likes', function() {
-      cy.contains(blogs[0].title).contains('show').click()
+      cy.contains(blogs[0].title).contains('#expand-button').click()
       cy.contains(blogs[0].title).get('#like').as('like0')
-      cy.contains(blogs[1].title).contains('show').click()
-      cy.contains(blogs[1].title).contains('like').as('like1')
-      cy.contains(blogs[2].title).contains('show').click()
-      cy.contains(blogs[2].title).contains('like').as('like2')
+      cy.contains(blogs[1].title).contains('#expand-button').click()
+      cy.contains(blogs[1].title).contains('#like').as('like1')
+      cy.contains(blogs[2].title).contains('#expand-button').click()
+      cy.contains(blogs[2].title).contains('#like').as('like2')
 
       cy.get('@like2').click()
       cy.contains(blogs[2].title).contains('likes 1')
